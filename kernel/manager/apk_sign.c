@@ -19,9 +19,27 @@
 #endif
 
 #include "apk_sign.h"
+#include "manager_sign.h"
 #include "policy/app_profile.h"
 #include "compat/kernel_compat.h"
 #include "klog.h" // IWYU pragma: keep
+
+static apk_sign_key_t apk_sign_keys[] = {
+    { EXPECTED_MANAGER_SIZE, EXPECTED_MANAGER_HASH }, /* KernelSU Next */
+#ifdef CONFIG_KSU_MULTI_MANAGER_SUPPORT
+    { EXPECTED_SIZE_5EC1CFF, EXPECTED_HASH_5EC1CFF }, // 5ec1cff/KernelSU
+    { EXPECTED_SIZE_RSUNTK, EXPECTED_HASH_RSUNTK }, // rsuntk/KernelSU
+    { EXPECTED_SIZE_SUKISU, EXPECTED_HASH_SUKISU }, // SukiSU-Ultra/SukiSU-Ultra
+    { EXPECTED_SIZE_KOWX712, EXPECTED_HASH_KOWX712 }, // KOWX712/KernelSU
+    { EXPECTED_SIZE_RESUKISU, EXPECTED_HASH_RESUKISU }, //RESUKISU
+#ifdef EXPECTED_SIZE
+    { EXPECTED_SIZE, EXPECTED_HASH }, // Custom
+#endif
+#ifdef EXPECTED_PR_BUILD_SIZE
+    { EXPECTED_PR_BUILD_SIZE, EXPECTED_PR_BUILD_HASH }, // Custom 2 (For PR build)
+#endif
+#endif
+};
 
 struct sdesc {
 	struct shash_desc shash;

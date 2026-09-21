@@ -61,6 +61,23 @@ config KSU_KPROBES_HOOK
 	  Enable KPROBES, KRETPROBES and TRACEPOINT hook for KernelSU core.
 	  This should not be used on kernel below 5.10.
 
+config KSU_MULTI_MANAGER_SUPPORT
+        bool "Multi Manager Support"
+        depends on KSU
+        default y
+        help
+          Enable support for multiple KernelSU manager APKs.
+          
+          This allows using various KernelSU manager APKs:
+          - 5ec1cff/KernelSU
+          - rsuntk/KernelSU  
+          - SukiSU-Ultra
+          - KOWX712/KernelSU
+          - Custom manager
+          - PR Build manager
+          
+          Say Y here if you want to use multiple manager APKs.
+          Say N if you only use KernelSU Next manager.
 config KSU_SYSCALL_TABLE_HOOK
 	bool "KernelSU syscall table patching hook"
 	depends on ARM64 || X86_64
